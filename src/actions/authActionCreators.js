@@ -79,6 +79,15 @@ export function getCurrentUser() {
   }
 }
 
+export function outletsNeededErrorMessage() {
+  return function(dispatch) {
+    dispatch({
+      type: 'OUTLETS_MISSING',
+      payload: ['Please choose a minimum of one source below.']
+    })
+  }
+}
+
 
 //
 //

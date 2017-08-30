@@ -63,6 +63,12 @@ export default function authReducer(
             loggingIn: false,
             errors: [action.payload]
           }
+          case 'OUTLETS_MISSING':
+            return {
+              ...state,
+              loggingIn: false,
+              errors: [action.payload]
+            }
       default:
       return state
     }

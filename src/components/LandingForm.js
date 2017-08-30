@@ -3,8 +3,9 @@ import { Image, Segment, Form, Input, Grid, Button, Card, Message } from 'semant
 import 'react-datepicker/dist/react-datepicker.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signUp } from '../actions/authActionCreators';
+import { signUp, outletsNeededErrorMessage } from '../actions/authActionCreators';
 import { fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles } from '../actions/fetchNewsSourcesActionCreators';
+
 import OutletCard from './OutletCard';
 import { Link } from 'react-router-dom';
 
@@ -36,7 +37,12 @@ class LandingForm extends Component {
 
   onSubmit = (event) => {
     event.preventDefault()
-    this.props.signUp(this.state)
+    if (this.state.outlets.length <= 0) {
+      this.props.outletsNeededErrorMessage()
+    } else {
+      debugger
+      this.props.signUp(this.state)
+    }
   }
 
   onImageSelect = (event, data, state) => {
@@ -81,7 +87,7 @@ class LandingForm extends Component {
 
   render() {
     return (
-      <Form onSubmit={this.onSubmit}>
+      <Form onSubmit={this.onSubmit.bind(this)}>
         <Grid divided>
           <Grid.Row centered columns={1}>
             <Grid.Column centered width={10}>
@@ -95,9 +101,7 @@ class LandingForm extends Component {
               <Input size='huge' placeholder='Enter your Name' name='name' onChange={this.onInputChange}/>
               <Input size='huge' placeholder='Enter your Email' name='email' onChange={this.onInputChange}/>
               <Input size='huge' placeholder='Enter your Password' name='password' onChange={this.onInputChange}/>
-              {this.state.outlets.length > 0 ?
-                <Button size='huge' primary>Signup!</Button> : null
-              }
+              <Button size='huge' primary>Signup!</Button>
               <div>already a member? <Link to='/login'>Login</Link></div>
             </Grid.Column>
           </Grid.Row>
@@ -130,4 +134,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { signUp, fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles })(LandingForm)
+export default connect(mapStateToProps, { signUp, fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles, outletsNeededErrorMessage })(LandingForm)
