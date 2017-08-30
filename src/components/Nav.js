@@ -9,13 +9,13 @@ class Nav extends Component {
 
   render() {
     return (
-      <Menu inverted>
+      <Menu borderless inverted className='navTitle'>
         {this.props.auth.isLoggedIn ?
-          <Menu.Item name='home' as={NavLink} to='/dashboard'>
-            Home
+          <Menu.Item className='navTitle' as={NavLink} to='/dashboard'>
+            Daily-Dasher
           </Menu.Item> :
-          <Menu.Item name='home' as={NavLink} to='/'>
-            Home
+          <Menu.Item className='navTitle' as={NavLink} to='/'>
+            Daily-Dasher
           </Menu.Item>
         }
         {this.props.auth.isLoggedIn ?
