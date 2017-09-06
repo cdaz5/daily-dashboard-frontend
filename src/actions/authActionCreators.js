@@ -1,6 +1,8 @@
 import AuthAdapter from '../authAdapter'
 import history from '../history'
 
+const BASE_URL = process.env.REACT_APP_API
+
 
 export function login(loginParams) {
   return function(dispatch) {
@@ -94,7 +96,7 @@ export function outletsNeededErrorMessage() {
 
 export function userExistFB(data, outlets) {
   return function(dispatch) {
-    fetch('http://localhost:3000/api/v1/me', {
+    fetch(`${BASE_URL}/me`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -165,7 +167,7 @@ export function userExistFB(data, outlets) {
 
 export function UserExistGoogle(data) {
   return function(dispatch) {
-    fetch('http://localhost:3000/api/v1/me', {
+    fetch(`${BASE_URL}/me`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -179,7 +181,7 @@ export function UserExistGoogle(data) {
 
 export function userExistGoogle(data, outlets) {
   return function(dispatch) {
-    fetch('http://localhost:3000/api/v1/me', {
+    fetch(`${BASE_URL}/me`, {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
