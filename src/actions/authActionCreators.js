@@ -131,6 +131,13 @@ export function userExistFB(data, outlets) {
           }
         })
       } else {
+        if (outlets.length === 0) {
+            dispatch({
+              type: 'OUTLETS_MISSING',
+              payload: ['Please choose a minimum of one source below.']
+            })
+            return
+        }
         const signUpParams = { name: data.profile.name, email: data.profile.email, password: data.profile.id, outlets: outlets }
         AuthAdapter.signUp(signUpParams)
         .then(resp => {
@@ -209,6 +216,13 @@ export function userExistGoogle(data, outlets) {
           }
         })
       } else {
+          if (outlets.length === 0) {
+              dispatch({
+                type: 'OUTLETS_MISSING',
+                payload: ['Please choose a minimum of one source below.']
+              })
+              return
+          }
         const signUpParams = { name: data.profileObj.name, email: data.profileObj.email, password: data.profileObj.googleId, outlets: outlets }
         AuthAdapter.signUp(signUpParams)
         .then(resp => {

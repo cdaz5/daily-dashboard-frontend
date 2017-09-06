@@ -89,11 +89,11 @@ class LandingForm extends Component {
 
   handleResponse = (data) => {
     console.log(data);
-    if (this.state.outlets.length <= 0) {
-      this.props.outletsNeededErrorMessage()
-    } else {
+    // if (this.state.outlets.length <= 0) {
+    //   this.props.outletsNeededErrorMessage()
+    // } else {
       this.props.userExistFB(data, this.state.outlets)
-    }
+    // }
   }
 
   handleError = (error) => {
@@ -102,11 +102,11 @@ class LandingForm extends Component {
 
   responseGoogle = (response) => {
     console.log(response)
-    if (this.state.outlets.length <= 0) {
-      this.props.outletsNeededErrorMessage()
-    } else {
+    // if (this.state.outlets.length <= 0) {
+    //   this.props.outletsNeededErrorMessage()
+    // } else {
       this.props.userExistGoogle(response, this.state.outlets)
-    }
+    // }
   }
 
 
@@ -123,19 +123,14 @@ class LandingForm extends Component {
           <Grid.Row centered columns={1}>
             <Grid.Column centered width={10}>
               {this.renderErrorMessage()}
-              <Input size='huge' placeholder='Enter your Name' name='name' onChange={this.onInputChange}/>
-              <Input size='huge' placeholder='Enter your Email' name='email' onChange={this.onInputChange}/>
-              <Input size='huge' placeholder='Enter your Password' name='password' onChange={this.onInputChange}/>
-              <Button size='huge' primary>Signup!</Button>
-              <div>already a member? <Link to='/login'>Login</Link></div>
-              <span size='huge' className='socialHolder'>or signup or login with:
+              <span size='huge' className='socialHolder'>Signup or Login With:
                 <FacebookProvider appId='114136192603482'>
                   <Login
                     scope="email"
                     onResponse={this.handleResponse.bind(this)}
                     onError={this.handleError.bind(this)}
                   >
-                  <Icon className='social' color='blue' name='facebook official' size='big'/>
+                  <Icon className='socialFB' color='blue' name='facebook official' size='huge'/>
                   </Login>
                 </FacebookProvider>
                 <GoogleLogin
@@ -145,7 +140,7 @@ class LandingForm extends Component {
                   tag='a'
                   className='google'
                 >
-                  <Icon className='social' color='red' name='google plus square' size='big'/>
+                  <Icon className='socialGoogle' color='red' name='google plus square' size='huge'/>
                 </GoogleLogin>
               </span>
             </Grid.Column>
@@ -169,6 +164,12 @@ class LandingForm extends Component {
     )
   }
 }
+
+{/* <Input size='huge' placeholder='Enter your Name' name='name' onChange={this.onInputChange}/>
+<Input size='huge' placeholder='Enter your Email' name='email' onChange={this.onInputChange}/>
+<Input size='huge' placeholder='Enter your Password' name='password' onChange={this.onInputChange}/>
+<Button size='huge' primary>Signup!</Button>
+<div>already a member? <Link to='/login'>Login</Link></div> */}
 
 
 const mapStateToProps = (state) => {
