@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom';
 import FacebookProvider, { Login } from 'react-facebook';
 import GoogleLogin from 'react-google-login';
 
+const FB_ID = process.env.REACT_APP_FB_ID
+const GOOG_ID = process.env.REACT_APP_GOOGLE_ID
+
 
 class LandingForm extends Component {
 
@@ -124,7 +127,7 @@ class LandingForm extends Component {
             <Grid.Column centered width={10}>
               {this.renderErrorMessage()}
               <span size='huge' className='socialHolder'>Signup or Login With:
-                <FacebookProvider appId='114136192603482'>
+                <FacebookProvider appId={FB_ID}>
                   <Login
                     scope="email"
                     onResponse={this.handleResponse.bind(this)}
@@ -134,7 +137,7 @@ class LandingForm extends Component {
                   </Login>
                 </FacebookProvider>
                 <GoogleLogin
-                  clientId='965434524807-148hpb1jntipkv8na4g0sd93solre5hl.apps.googleusercontent.com'
+                  clientId={GOOG_ID}
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}
                   tag='a'
