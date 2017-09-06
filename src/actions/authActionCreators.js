@@ -4,15 +4,18 @@ import history from '../history'
 
 export function login(loginParams) {
   return function(dispatch) {
+    console.log('before authadapter')
     AuthAdapter.login(loginParams)
     .then(resp => {
       if (resp.error) {
-        console.log(resp)
+
+        console.log('in  login error')
         dispatch({
           type: 'LOGIN_FAILED',
           payload: [resp.error]
         })
       } else {
+        console.log('about to login')
         dispatch({
           type: 'LOGIN_USER',
           payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
@@ -20,8 +23,10 @@ export function login(loginParams) {
         dispatch({
           type: 'CLEAR_LOGIN_ERRORS'
         })
+        console.log('bout to set jwt')
         window.localStorage.setItem('jwt', resp.jwt)
         history.push('/dashboard')
+        console.log('after redirect')
       }
     })
   }
@@ -41,7 +46,6 @@ export function signUp(signUpParams) {
     AuthAdapter.signUp(signUpParams)
     .then(resp => {
       if (resp.errors) {
-        debugger
         dispatch({
           type: 'SIGNUP_FAILED',
           payload: resp.errors
@@ -84,6 +88,148 @@ export function outletsNeededErrorMessage() {
     dispatch({
       type: 'OUTLETS_MISSING',
       payload: ['Please choose a minimum of one source below.']
+    })
+  }
+}
+
+export function userExistFB(data, outlets) {
+  return function(dispatch) {
+    fetch('http://localhost:3000/api/v1/me', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({email: data.profile.email})
+    })
+    .then(resp => resp.json())
+    .then(jsonObject => {
+      if (jsonObject.user) {
+        const loginParams = { email: jsonObject.user.email, password: data.profile.id }
+        AuthAdapter.login(loginParams)
+        .then(resp => {
+          if (resp.error) {
+
+            console.log('in  login error')
+            dispatch({
+              type: 'LOGIN_FAILED',
+              payload: [resp.error]
+            })
+          } else {
+            console.log('about to login')
+            dispatch({
+              type: 'LOGIN_USER',
+              payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
+            })
+            dispatch({
+              type: 'CLEAR_LOGIN_ERRORS'
+            })
+            console.log('bout to set jwt')
+            window.localStorage.setItem('jwt', resp.jwt)
+            history.push('/dashboard')
+            console.log('after redirect')
+          }
+        })
+      } else {
+        const signUpParams = { name: data.profile.name, email: data.profile.email, password: data.profile.id, outlets: outlets }
+        AuthAdapter.signUp(signUpParams)
+        .then(resp => {
+          if (resp.errors) {
+            dispatch({
+              type: 'SIGNUP_FAILED',
+              payload: resp.errors
+            })
+          } else {
+            dispatch({
+              type: 'LOGIN_USER',
+              payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets}
+            })
+            dispatch({
+              type: 'CLEAR_LOGIN_ERRORS'
+            })
+            window.localStorage.setItem('jwt', resp.jwt)
+            history.push('/dashboard')
+          }
+        })
+      }
+    })
+  }
+}
+
+export function UserExistGoogle(data) {
+  return function(dispatch) {
+    fetch('http://localhost:3000/api/v1/me', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({email: data.profileObj.email})
+    })
+    .then(resp => resp.json())
+  }
+}
+
+export function userExistGoogle(data, outlets) {
+  return function(dispatch) {
+    fetch('http://localhost:3000/api/v1/me', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify({email: data.profileObj.email})
+    })
+    .then(resp => resp.json())
+    .then(jsonObject => {
+      if (jsonObject.user) {
+        const loginParams = { email: jsonObject.user.email, password: data.profileObj.googleId }
+        AuthAdapter.login(loginParams)
+        .then(resp => {
+          if (resp.error) {
+
+            console.log('in  login error')
+            dispatch({
+              type: 'LOGIN_FAILED',
+              payload: [resp.error]
+            })
+          } else {
+            console.log('about to login')
+            dispatch({
+              type: 'LOGIN_USER',
+              payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
+            })
+            dispatch({
+              type: 'CLEAR_LOGIN_ERRORS'
+            })
+            console.log('bout to set jwt')
+            window.localStorage.setItem('jwt', resp.jwt)
+            history.push('/dashboard')
+            console.log('after redirect')
+          }
+        })
+      } else {
+        const signUpParams = { name: data.profileObj.name, email: data.profileObj.email, password: data.profileObj.googleId, outlets: outlets }
+        AuthAdapter.signUp(signUpParams)
+        .then(resp => {
+          if (resp.errors) {
+            dispatch({
+              type: 'SIGNUP_FAILED',
+              payload: resp.errors
+            })
+          } else {
+            dispatch({
+              type: 'LOGIN_USER',
+              payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets}
+            })
+            dispatch({
+              type: 'CLEAR_LOGIN_ERRORS'
+            })
+            window.localStorage.setItem('jwt', resp.jwt)
+            history.push('/dashboard')
+          }
+        })
+      }
     })
   }
 }

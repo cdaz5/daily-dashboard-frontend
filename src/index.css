@@ -122,6 +122,48 @@ body {
     background-color: black !important;
 }
 
+.socialHolder {
+  text-align: center !important;
+}
+
+.social {
+  /*text-align: center !important;*/
+  /*color: rgba(50, 89, 156) !important;*/
+	/*height: 48px;
+	width: 48px;
+	margin: 10px;*/
+	/*float: left;*/
+	/*border-radius: 50%;*/
+  /*box-shadow: 3px 3px 10px rgba(10, 10, 10, .5)!important;*/
+
+	/*-webkit-transition: all ease 0.3s;
+	-moz-transition: all ease 0.3s;
+	-o-transition: all ease 0.3s;
+	-ms-transition: all ease 0.3s;
+	transition: all ease 0.3s;*/
+}
+.social:hover {
+	/*box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.8);*/
+  /*border-radius: 50% !important;*/
+	/*-webkit-transform:rotate(360deg);
+	-moz-transform:rotate(360deg);
+	-o-transform:rotate(360deg);
+	-ms-transform:rotate(360deg);
+	transform:rotate(360deg);*/
+  transform: scale(2);
+  z-index: 1000 !important;
+}
+
+.facebookLogin {
+  background-color: transparent !important;
+  box-shadow: 0px 0px 0px 0px !important;
+}
+
+.google {
+  background: transparent !important;
+  width: 0px !important;
+
+}
 
 
 

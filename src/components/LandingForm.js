@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Image, Segment, Form, Input, Grid, Button, Card, Message } from 'semantic-ui-react';
+import { Image, Segment, Icon, Form, Input, Grid, Button, Card, Message } from 'semantic-ui-react';
 import 'react-datepicker/dist/react-datepicker.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signUp, outletsNeededErrorMessage } from '../actions/authActionCreators';
+import { signUp, outletsNeededErrorMessage, userExistFB, userExistGoogle } from '../actions/authActionCreators';
 import { fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles } from '../actions/fetchNewsSourcesActionCreators';
-
+// import FBLogin from './FacebookLogin';
 import OutletCard from './OutletCard';
 import { Link } from 'react-router-dom';
+import FacebookProvider, { Login } from 'react-facebook';
+import GoogleLogin from 'react-google-login';
+
 
 class LandingForm extends Component {
 
@@ -40,7 +43,7 @@ class LandingForm extends Component {
     if (this.state.outlets.length <= 0) {
       this.props.outletsNeededErrorMessage()
     } else {
-      debugger
+      // debugger
       this.props.signUp(this.state)
     }
   }
@@ -84,6 +87,28 @@ class LandingForm extends Component {
     }
   }
 
+  handleResponse = (data) => {
+    console.log(data);
+    if (this.state.outlets.length <= 0) {
+      this.props.outletsNeededErrorMessage()
+    } else {
+      this.props.userExistFB(data, this.state.outlets)
+    }
+  }
+
+  handleError = (error) => {
+    this.setState({ error });
+  }
+
+  responseGoogle = (response) => {
+    console.log(response)
+    if (this.state.outlets.length <= 0) {
+      this.props.outletsNeededErrorMessage()
+    } else {
+      this.props.userExistGoogle(response, this.state.outlets)
+    }
+  }
+
 
   render() {
     return (
@@ -103,6 +128,26 @@ class LandingForm extends Component {
               <Input size='huge' placeholder='Enter your Password' name='password' onChange={this.onInputChange}/>
               <Button size='huge' primary>Signup!</Button>
               <div>already a member? <Link to='/login'>Login</Link></div>
+              <span size='huge' className='socialHolder'>or signup or login with:
+                <FacebookProvider appId='114136192603482'>
+                  <Login
+                    scope="email"
+                    onResponse={this.handleResponse.bind(this)}
+                    onError={this.handleError.bind(this)}
+                  >
+                  <Icon className='social' color='blue' name='facebook official' size='big'/>
+                  </Login>
+                </FacebookProvider>
+                <GoogleLogin
+                  clientId='965434524807-148hpb1jntipkv8na4g0sd93solre5hl.apps.googleusercontent.com'
+                  onSuccess={this.responseGoogle}
+                  onFailure={this.responseGoogle}
+                  tag='a'
+                  className='google'
+                >
+                  <Icon className='social' color='red' name='google plus square' size='big'/>
+                </GoogleLogin>
+              </span>
             </Grid.Column>
           </Grid.Row>
           <Grid.Row centered columns={1}>
@@ -134,4 +179,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { signUp, fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles, outletsNeededErrorMessage })(LandingForm)
+export default connect(mapStateToProps, { signUp, fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles, outletsNeededErrorMessage, userExistFB, userExistGoogle })(LandingForm)
