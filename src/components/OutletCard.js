@@ -20,23 +20,6 @@ class OutletCard extends Component {
     return this.props.sources
   }
 
-  // <Card raised>
-  //   <Image centered={true} size='small' src={source.src} />
-  //   <Card.Content>
-  //     <Card.Header>
-  //       {source.name}
-  //     </Card.Header>
-  //     <Card.Description>
-  //       <Segment inverted color='olive'>
-  //         <Checkbox toggle label='Add Please!' name={source} onChange={(event, element, source) => this.props.onChange(event, element, source)}/>
-  //       </Segment>
-  //     </Card.Description>
-  //   </Card.Content>
-  // </Card>
-
-  // label={{ as: 'a', color: 'black', content:`${source.name}`, corner: 'left' }}
-
-
   onClickDisabled = () => {
     this.setState({
       isDisabled: !this.state.isDisabled

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { signUp, outletsNeededErrorMessage, userExistFB, userExistGoogle } from '../actions/authActionCreators';
 import { fetchedSources, fetchingSources, fetchedImages, fetchingArticles, fetchedArticles } from '../actions/fetchNewsSourcesActionCreators';
-// import FBLogin from './FacebookLogin';
 import OutletCard from './OutletCard';
 import { Link } from 'react-router-dom';
 import FacebookProvider, { Login } from 'react-facebook';
@@ -91,12 +90,7 @@ class LandingForm extends Component {
   }
 
   handleResponse = (data) => {
-    console.log(data);
-    // if (this.state.outlets.length <= 0) {
-    //   this.props.outletsNeededErrorMessage()
-    // } else {
       this.props.userExistFB(data, this.state.outlets)
-    // }
   }
 
   handleError = (error) => {
@@ -104,12 +98,7 @@ class LandingForm extends Component {
   }
 
   responseGoogle = (response) => {
-    console.log(response)
-    // if (this.state.outlets.length <= 0) {
-    //   this.props.outletsNeededErrorMessage()
-    // } else {
       this.props.userExistGoogle(response, this.state.outlets)
-    // }
   }
 
 
@@ -168,11 +157,6 @@ class LandingForm extends Component {
   }
 }
 
-{/* <Input size='huge' placeholder='Enter your Name' name='name' onChange={this.onInputChange}/>
-<Input size='huge' placeholder='Enter your Email' name='email' onChange={this.onInputChange}/>
-<Input size='huge' placeholder='Enter your Password' name='password' onChange={this.onInputChange}/>
-<Button size='huge' primary>Signup!</Button>
-<div>already a member? <Link to='/login'>Login</Link></div> */}
 
 
 const mapStateToProps = (state) => {

@@ -46,7 +46,6 @@ export function fetchedArticles(sourceName) {
     fetch(`https://newsapi.org/v1/articles?source=${sourceName}&sortBy=top&apiKey=${API_KEY}`)
     .then(resp => resp.json())
     .then(jsonObject => {
-      // debugger
       dispatch({
         type: 'FETCHED_ARTICLES',
         payload: jsonObject

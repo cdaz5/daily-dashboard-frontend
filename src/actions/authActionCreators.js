@@ -6,18 +6,14 @@ const BASE_URL = process.env.REACT_APP_API
 
 export function login(loginParams) {
   return function(dispatch) {
-    console.log('before authadapter')
     AuthAdapter.login(loginParams)
     .then(resp => {
       if (resp.error) {
-
-        console.log('in  login error')
         dispatch({
           type: 'LOGIN_FAILED',
           payload: [resp.error]
         })
       } else {
-        console.log('about to login')
         dispatch({
           type: 'LOGIN_USER',
           payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
@@ -25,10 +21,8 @@ export function login(loginParams) {
         dispatch({
           type: 'CLEAR_LOGIN_ERRORS'
         })
-        console.log('bout to set jwt')
         window.localStorage.setItem('jwt', resp.jwt)
         history.push('/dashboard')
-        console.log('after redirect')
       }
     })
   }
@@ -111,14 +105,11 @@ export function userExistFB(data, outlets) {
         AuthAdapter.login(loginParams)
         .then(resp => {
           if (resp.error) {
-
-            console.log('in  login error')
             dispatch({
               type: 'LOGIN_FAILED',
               payload: [resp.error]
             })
           } else {
-            console.log('about to login')
             dispatch({
               type: 'LOGIN_USER',
               payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
@@ -126,10 +117,8 @@ export function userExistFB(data, outlets) {
             dispatch({
               type: 'CLEAR_LOGIN_ERRORS'
             })
-            console.log('bout to set jwt')
             window.localStorage.setItem('jwt', resp.jwt)
             history.push('/dashboard')
-            console.log('after redirect')
           }
         })
       } else {
@@ -196,14 +185,11 @@ export function userExistGoogle(data, outlets) {
         AuthAdapter.login(loginParams)
         .then(resp => {
           if (resp.error) {
-
-            console.log('in  login error')
             dispatch({
               type: 'LOGIN_FAILED',
               payload: [resp.error]
             })
           } else {
-            console.log('about to login')
             dispatch({
               type: 'LOGIN_USER',
               payload: { id: resp.id, name: resp.name, email: resp.email, outlets: resp.outlets }
@@ -211,10 +197,8 @@ export function userExistGoogle(data, outlets) {
             dispatch({
               type: 'CLEAR_LOGIN_ERRORS'
             })
-            console.log('bout to set jwt')
             window.localStorage.setItem('jwt', resp.jwt)
             history.push('/dashboard')
-            console.log('after redirect')
           }
         })
       } else {
@@ -249,19 +233,3 @@ export function userExistGoogle(data, outlets) {
     })
   }
 }
-
-
-//
-//
-// export function signingupActionCreator() {
-//   return {
-//     type: 'UPDATING_CURRENT_USER'
-//   }
-// }
-//
-// export function signedUpActionCreator(payload) {
-//   return {
-//     type: 'UPDATED_CURRENT_USER',
-//     payload: payload
-//   }
-// }

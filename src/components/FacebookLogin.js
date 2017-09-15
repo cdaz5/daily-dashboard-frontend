@@ -5,8 +5,7 @@ import { Icon } from 'semantic-ui-react';
 const APP_ID = process.env.REACT_APP_FB_ID
 
 export default class FBLogin extends Component {
-  handleResponse = (data) => {
-    console.log(data);
+  handleResponse = (data) => {    
   }
 
   handleError = (error) => {
